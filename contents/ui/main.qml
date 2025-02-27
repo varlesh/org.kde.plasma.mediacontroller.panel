@@ -48,7 +48,7 @@ PlasmoidItem {
     case Mpris.PlaybackStatus.Paused:
         return "media-playback-paused-symbolic";
     default:
-        return "media-playback-stopped-symbolic";
+        return "new-audio-alarm";
     }
     Plasmoid.status: PlasmaCore.Types.PassiveStatus
     toolTipMainText: root.playbackStatus > Mpris.PlaybackStatus.Stopped ? root.track : i18n("No media playing")

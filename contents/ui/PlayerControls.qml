@@ -14,10 +14,10 @@ RowLayout {
 
     property int controlSize: parent.height + 2
     readonly property int controlSmallerSize: Math.min(controlSize,
-                                                       Math.max(Math.round(controlSize / 1.25), Kirigami.Units.iconSizes.medium))
+                                                       Math.max(Math.round(controlSize / 1.25), Kirigami.Units.iconSizes.small))
     readonly property int controlsCount : 1 + (prevButton.visible ? 1 : 0) +  (nextButton.visible ? 1 : 0)
 
-    spacing: compactView ?  0 : Kirigami.Units.largeSpacing
+    spacing: compactView ?  0 : Kirigami.Units.smallSpacing
 
     Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
 
@@ -29,7 +29,7 @@ RowLayout {
         implicitHeight: implicitWidth
         enabled: root.metadata.playbackStatus == Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
 
-        icon.name: "upindicator"
+        icon.name: "overflow-menu"
         onClicked: {
             root.expanded = !root.expanded
         }
@@ -54,7 +54,7 @@ RowLayout {
 
     PC3.ToolButton {
         Layout.alignment: Qt.AlignCenter
-        implicitWidth: controlSize
+        implicitWidth: controlSmallerSize
         implicitHeight: implicitWidth
         enabled: root.metadata.playbackStatus == Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
         icon.name: root.isPlaying ? "media-playback-pause" : "media-playback-start"
