@@ -19,7 +19,7 @@ RowLayout {
 
     spacing: compactView ?  0 : Kirigami.Units.smallSpacing
 
-    Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
+    Layout.minimumHeight: Layout.minimumHeight
 
 
     PC3.ToolButton {
@@ -27,13 +27,13 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
         implicitWidth: controlSmallerSize
         implicitHeight: implicitWidth
-        enabled: root.metadata.playbackStatus == Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
+        enabled: Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
 
-        icon.name: "overflow-menu"
+        icon.name: "overflow-menu-symbolic"
         onClicked: {
             root.expanded = !root.expanded
         }
-        Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
+        Layout.minimumHeight: Layout.minimumHeight
     }
 
     PC3.ToolButton {
@@ -44,22 +44,22 @@ RowLayout {
         visible: root.canGoPrevious
         enabled: playerControls.enabled && root.canGoPrevious
 
-        icon.name: LayoutMirroring.enabled ? "media-skip-forward" : "media-skip-backward"
+        icon.name: LayoutMirroring.enabled ? "media-skip-forward-symbolic" : "media-skip-backward-symbolic"
         onClicked: {
             //root.position = 0    // Let the media start from beginning. Bug 362473
             root.previous()
         }
-        Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
+        Layout.minimumHeight: Layout.minimumHeight
     }
 
     PC3.ToolButton {
         Layout.alignment: Qt.AlignCenter
         implicitWidth: controlSmallerSize
         implicitHeight: implicitWidth
-        enabled: root.metadata.playbackStatus == Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
-        icon.name: root.isPlaying ? "media-playback-pause" : "media-playback-start"
+        enabled: Mpris.PlaybackStatus.Playing ? root.canPause : root.canPlay
+        icon.name: root.isPlaying ? "media-playback-pause-symbolic" : "media-playback-start-symbolic"
         onClicked: root.togglePlaying()
-        Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
+        Layout.minimumHeight: Layout.minimumHeight
     }
 
     PC3.ToolButton {
@@ -70,11 +70,11 @@ RowLayout {
         visible: root.canGoNext
         enabled: playerControls.enabled && root.canGoNext
 
-        icon.name: LayoutMirroring.enabled ? "media-skip-backward" : "media-skip-forward"
+        icon.name: LayoutMirroring.enabled ? "media-skip-backward-symbolic" : "media-skip-forward-symbolic"
         onClicked: {
             //root.position = 0    // Let the media start from beginning. Bug 362473
             root.next()
         }
-        Layout.minimumHeight: oneLineLayout.Layout.minimumHeight
+        Layout.minimumHeight: Layout.minimumHeight
     }
 }

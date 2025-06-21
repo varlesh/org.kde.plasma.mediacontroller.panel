@@ -10,7 +10,6 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.private.mediacontroller 1.0
 import org.kde.plasma.private.mpris as Mpris
 import org.kde.kirigami 2 as Kirigami
 
@@ -19,8 +18,6 @@ PlasmoidItem {
 
     switchWidth: Kirigami.Units.gridUnit * 14
     switchHeight: Kirigami.Units.gridUnit * 10
-
-    readonly property int volumePercentStep: config.volumeStep
 
     // BEGIN model properties
     readonly property string track: mpris2Model.currentPlayer?.track ?? ""
@@ -54,11 +51,11 @@ PlasmoidItem {
     toolTipMainText: root.playbackStatus > Mpris.PlaybackStatus.Stopped ? root.track : i18n("No media playing")
     toolTipSubText: switch (root.playbackStatus) {
     case Mpris.PlaybackStatus.Playing:
-        return root.artist ? i18nc("@info:tooltip %1 is a musical artist and %2 is an app name", "by %1 (%2)\nMiddle-click to pause\nScroll to adjust volume", root.artist, root.identity)
-            : i18nc("@info:tooltip %1 is an app name", "%1\nMiddle-click to pause\nScroll to adjust volume", root.identity)
+        return root.artist ? i18nc("@info:tooltip %1 is a musical artist and %2 is an app name", "by %1 (%2)\nMiddle-click to pause", root.artist, root.identity)
+            : i18nc("@info:tooltip %1 is an app name", "%1\nMiddle-click to pause", root.identity)
     case Mpris.PlaybackStatus.Paused:
-        return root.artist ? i18nc("@info:tooltip %1 is a musical artist and %2 is an app name", "by %1 (paused, %2)\nMiddle-click to play\nScroll to adjust volume", root.artist, root.identity)
-            : i18nc("@info:tooltip %1 is an app name", "Paused (%1)\nMiddle-click to play\nScroll to adjust volume", root.identity)
+        return root.artist ? i18nc("@info:tooltip %1 is a musical artist and %2 is an app name", "by %1 (paused, %2)\nMiddle-click to play", root.artist, root.identity)
+            : i18nc("@info:tooltip %1 is an app name", "Paused (%1)\nMiddle-click to play", root.identity)
     default:
         return "";
     }
@@ -93,10 +90,6 @@ PlasmoidItem {
                 Plasmoid.status = PlasmaCore.Types.PassiveStatus
             }
         }
-    }
-
-    GlobalConfig {
-        id: config
     }
 
     Plasmoid.contextualActions: [

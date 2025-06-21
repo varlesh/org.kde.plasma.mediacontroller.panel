@@ -77,20 +77,6 @@ MouseArea {
     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
     hoverEnabled: true
 
-    property int wheelDelta: 0
-
-    onWheel: wheel => {
-        wheelDelta += (wheel.inverted ? -1 : 1) * (wheel.angleDelta.y ? wheel.angleDelta.y : -wheel.angleDelta.x)
-        while (wheelDelta >= 120) {
-            wheelDelta -= 120;
-            mpris2Model.currentPlayer?.changeVolume(volumePercentStep / 100, true);
-        }
-        while (wheelDelta <= -120) {
-            wheelDelta += 120;
-            mpris2Model.currentPlayer?.changeVolume(-volumePercentStep / 100, true);
-        }
-    }
-
     onClicked: mouse => {
         switch (mouse.button) {
         case Qt.MiddleButton:
@@ -166,8 +152,6 @@ MouseArea {
         active: !iconLoader.active
         sourceComponent: GridLayout {
             id: grid
-            readonly property real labelHeight: songTitle.contentHeight
-
             rowSpacing: Kirigami.Units.smallSpacing
             columnSpacing: rowSpacing
             flow: {

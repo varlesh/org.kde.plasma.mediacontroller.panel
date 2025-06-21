@@ -379,6 +379,16 @@ PlasmaExtras.Representation {
 
                 // ensure the layout doesn't shift as the numbers change and measure roughly the longest text that could occur with the current song
 
+                RowLayout { // Player Controls
+                    id: playerControls
+
+                    property int controlsSize: Kirigami.Units.gridUnit * 3
+
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.bottomMargin: Kirigami.Units.smallSpacing
+                    spacing: Kirigami.Units.smallSpacing
+                }
+
                 PlasmaComponents3.ToolButton {
                     id: shuffleButton
                     Layout.rightMargin: LayoutMirroring.enabled ? 0 : Kirigami.Units.gridUnit - playerControls.spacing
@@ -391,9 +401,6 @@ PlasmaExtras.Representation {
 
                     display: PlasmaComponents3.AbstractButton.IconOnly
                     text: i18nc("@action:button", "Shuffle")
-
-                    KeyNavigation.right: previousButton.enabled ? previousButton : previousButton.KeyNavigation.right
-                    KeyNavigation.up: playPauseButton.KeyNavigation.up
 
                     onClicked: {
                         mpris2Model.currentPlayer.shuffle =
@@ -431,7 +438,6 @@ PlasmaExtras.Representation {
 
                     KeyNavigation.backtab: playerSelector.currentItem
                     KeyNavigation.up: KeyNavigation.backtab
-                    KeyNavigation.down: playPauseButton.enabled ? playPauseButton : (playPauseButton.KeyNavigation.left.enabled ? playPauseButton.KeyNavigation.left : playPauseButton.KeyNavigation.right)
                     Keys.onLeftPressed: {
                         seekSlider.value = Math.max(0, seekSlider.value - 5000000) // microseconds
                         seekSlider.moved();
@@ -548,9 +554,6 @@ PlasmaExtras.Representation {
 
                     display: PlasmaComponents3.AbstractButton.IconOnly
                     text: root.loopStatus === Mpris.LoopStatus.Track ? i18n("Repeat Track") : i18n("Repeat")
-
-                    KeyNavigation.left: nextButton.enabled ? nextButton : nextButton.KeyNavigation.left
-                    KeyNavigation.up: playPauseButton.KeyNavigation.up
 
                     onClicked: {
                         let status;
