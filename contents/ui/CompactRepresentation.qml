@@ -77,23 +77,44 @@ MouseArea {
     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
     hoverEnabled: true
 
-    onClicked: mouse => {
-        switch (mouse.button) {
-        case Qt.MiddleButton:
-            root.togglePlaying()
-            break
-        case Qt.BackButton:
-            if (root.canGoPrevious) {
-                root.previous();
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.BackButton | Qt.ForwardButton
+        hoverEnabled: compactRepresentation.item instanceof Kirigami.Icon
+        property int wheelDelta: 0
+        onWheel: wheel => {
+            if (mpris2Model.currentPlayer === null) {
+                return;
             }
-            break
-        case Qt.ForwardButton:
-            if (root.canGoNext) {
-                root.next();
+            wheelDelta += (wheel.inverted ? -1 : 1) * (wheel.angleDelta.y ? wheel.angleDelta.y : -wheel.angleDelta.x)
+            while (wheelDelta >= 120) {
+                wheelDelta -= 120;
+                mpris2Model.currentPlayer.changeVolume(2 / 100, true);
             }
-            break
-        default:
-            root.expanded = !root.expanded
+            while (wheelDelta <= -120) {
+                wheelDelta += 120;
+                mpris2Model.currentPlayer.changeVolume(-2 / 100, true);
+            }
+        }
+        onClicked: (mouse) => {
+            switch (mouse.button) {
+                case Qt.MiddleButton:
+                    root.togglePlaying()
+                    break
+                case Qt.BackButton:
+                    if (root.canGoPrevious) {
+                        root.previous();
+                    }
+                    break
+                case Qt.ForwardButton:
+                    if (root.canGoNext) {
+                        root.next();
+                    }
+                    break
+                default:
+                    root.expanded = !root.expanded
+            }
         }
     }
 
